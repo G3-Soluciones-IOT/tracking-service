@@ -1,5 +1,6 @@
 package pe.edu.upc.tracking_service.tracking.application.internal.outboundservices.acl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -16,7 +17,7 @@ public class ExternalUserProfileService {
     private final RestClient restClient;
 
     public ExternalUserProfileService(
-            RestClient.Builder restClientBuilder,
+            @Qualifier("loadBalancedRestClientBuilder") RestClient.Builder restClientBuilder,
             @Value("${services.profiles.base-url}") String profilesBaseUrl) {
         this.restClient = restClientBuilder
                 .baseUrl(profilesBaseUrl)

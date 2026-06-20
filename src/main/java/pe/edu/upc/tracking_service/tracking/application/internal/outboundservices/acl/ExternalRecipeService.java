@@ -1,5 +1,6 @@
 package pe.edu.upc.tracking_service.tracking.application.internal.outboundservices.acl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class ExternalRecipeService {
     private final RestClient restClient;
 
     public ExternalRecipeService(
-            RestClient.Builder restClientBuilder,
+            @Qualifier("loadBalancedRestClientBuilder") RestClient.Builder restClientBuilder,
             @Value("${services.recipes.base-url}") String recipesBaseUrl) {
         this.restClient = restClientBuilder
                 .baseUrl(recipesBaseUrl)
