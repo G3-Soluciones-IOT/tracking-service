@@ -1,4 +1,4 @@
-package pe.edu.upc.tracking_service.tracking;
+package pe.edu.upc.tracking_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
