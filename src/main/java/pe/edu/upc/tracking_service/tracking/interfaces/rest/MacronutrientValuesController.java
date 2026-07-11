@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.tracking_service.tracking.domain.model.queries.GetConsumedMacrosQuery;
+import pe.edu.upc.tracking_service.tracking.domain.model.queries.GetMacronutrientValuesByIdQuery;
 import pe.edu.upc.tracking_service.tracking.domain.services.MacronutrientValuesQueryService;
 import pe.edu.upc.tracking_service.tracking.interfaces.rest.resources.MacronutrientValuesResource;
 import pe.edu.upc.tracking_service.tracking.interfaces.rest.transform.MacronutrientValuesResourceFromEntityAssembler;
@@ -35,5 +36,13 @@ public class MacronutrientValuesController {
 
         var resource = MacronutrientValuesResourceFromEntityAssembler.toResource(optionalMacros.get());
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/{macronutrientValuesId}/exists")
+    public ResponseEntity<Void> existsById(@PathVariable Long macronutrientValuesId) {
+        return macronutrientValuesQueryService.handle(new GetMacronutrientValuesByIdQuery(macronutrientValuesId))
+                .isPresent()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 }

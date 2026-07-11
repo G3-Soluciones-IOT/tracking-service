@@ -59,7 +59,7 @@ public class ExternalUserProfileService {
 
         try {
             return Optional.ofNullable(restClient.get()
-                            .uri("/api/v1/profiles/{profileId}", profileId)
+                            .uri("/api/v1/user-profiles/{profileId}", profileId)
                             .retrieve()
                             .body(UserProfileResource.class))
                     .map(this::mapToDto);
@@ -69,20 +69,13 @@ public class ExternalUserProfileService {
     }
 
     private UserProfileDto mapToDto(UserProfileResource resource) {
-        double activityFactor = resource.activityLevel() == null
-                ? 1.0
-                : resource.activityLevel().activityFactor();
-        String objectiveName = resource.objective() == null
-                ? null
-                : resource.objective().objectiveName();
-
         return new UserProfileDto(
                 resource.id(),
                 resource.gender(),
                 resource.height(),
                 resource.weight(),
-                activityFactor,
-                objectiveName,
+                1.0,
+                resource.objectiveName(),
                 resource.birthDate()
         );
     }
